@@ -1,2 +1,2 @@
 # summerweb
-Repository for summer 2022 web programming
+Greg's repository for summer 2022 web programming
