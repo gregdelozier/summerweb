@@ -1,7 +1,7 @@
 <html>
     <body>
-        <h1>Login</h1>
-        <form action="/login" method="post">
+        <h1>Register</h1>
+        <form action="/register" method="post">
             <table>
                 <tr>
                     <td><em>Name</em></td>
@@ -12,15 +12,17 @@
                     <td><input type="text" name="password"/></td>
                 </tr>
                 <tr>
+                    <td><em>Repeat Password</em></td>
+                    <td><input type="text" name="repeated"/></td>
+                </tr>
+                <tr>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Submit"/></td>
+                    <td><input type="submit" value="Register"/></td>
                 </tr>
             </table> 
         </form>
-        <hr/>
-        <a href="/register">Do you need to register?</a>
     </body>
 </html>
