@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h1>Shopping List</h1>
+        <table>
+        {% for item in list %}
+            <tr>
+                <td>{{ item['_id'] }}</td>
+                <td>{{ item['desc'] }}</td>
+                <td><a href="/update_item/{{item['_id']}}">Update</a></td>
+                <td><a href="/delete_item/{{item['_id']}}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        <table>
+
+    <a href="/add_item">Add an item to the list...</a>
+    </body>
+</html>
