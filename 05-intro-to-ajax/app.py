@@ -9,18 +9,32 @@ app = Flask(__name__)
 
 @app.route("/")
 def get_list():
-    shopping_db = db_server.shopping_db
-    shopping_list = shopping_db.shopping_list
+#   shopping_db = db_server.shopping_db
+#   shopping_list = shopping_db.shopping_list
 
-    the_list = list(shopping_list.find({}))
+#    the_list = list(shopping_list.find({}))
 
-    print(the_list)
+#    print(the_list)
 
-    return render_template('list.html',list=the_list)
+    return render_template('list.html')
 
 @app.route("/add_item", methods=['GET'])
 def get_add_item():
     return render_template('add_item.html')
+
+@app.route("/data")
+def get_data():
+    data = { "data":[
+    {
+        "_id": "asdafga",
+        "desc": "apples",
+    },
+    {
+        "_id": "sdfsdf",
+        "desc": "oranges",
+    },
+    ]}
+    return data
 
 @app.route("/add_item", methods=['POST'])
 def post_add_item():
