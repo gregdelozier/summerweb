@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <h1>Update Item</h1>
+        <form action="/update_item" method="post">
+            <input type="hidden" value="{{item['_id']}}" name="_id"/>
+            <hr/>
+            <em>Item</em><input type="text" value="{{item['desc']}}" name="desc"/>
+            <hr/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>

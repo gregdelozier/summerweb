@@ -1,0 +1,49 @@
+<html>
+    <body onload="update_data()">
+        <h1>Shopping List</h1>
+        <hr/>
+        <table id="listtable">
+        </table>
+        </body>
+        <hr/>
+        <a href="/add_item">Add an item to the list...</a>
+        <hr/>   
+    </body>
+    <script>
+        function update_data() {
+            xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                // What to do when the response is ready                responseText = ;
+                data = JSON.parse(xhttp.responseText)
+                console.log(data)
+                style = "style=\"border:1px solid black\""
+                t = "<table " + style + ">"
+                for (i in data.data) {
+                    item = data.data[i]
+                    t += "<tr>"
+                    t += "<td " + style + ">" + item._id + "</td>"
+                    t += "<td " + style + ">" + item.desc + "</td>"
+                    t += "<td><a href=\"/update_item/" + item._id + "\">Update</a></td>"
+                    t += "<td><button type=\"button\" onclick=\"delete_data('" + item._id + "')\" >Delete</button></td>"
+                    t += "</tr>"
+                }
+                t += "</table>"
+                listTable = document.getElementById('listtable')
+                listTable.innerHTML = t
+            }       
+            xhttp.open("GET", "/data/get");
+            xhttp.send();
+            console.log("waiting for response from ajax call");
+        }
+
+        function delete_data(id) {
+            xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                update_data() 
+            }       
+            xhttp.open("GET", "/data/delete/" + id);
+            xhttp.send();
+            console.log("waiting for response from ajax call");
+        }
+    </script>
+</html>
