@@ -1,15 +1,39 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect, url_for
+import requests
 
 from mongita import MongitaClientDisk
 db_server = MongitaClientDisk(host="./.mongita")
+
+openweathermap_api = "<use your API from openweathermap>"
+
+lat = 41.15
+lon = -81.36
+
+openweathermap_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={openweathermap_api}"
+print(openweathermap_url)
+
+def temp_f(temp_k): 
+    return temp_k * 9.0/5.0 - 459.67
 
 app = Flask(__name__)
 
 @app.route("/map")
 def get_map():
-    return render_template('map.html')
+    result = requests.get(openweathermap_url)
+    data = result.json()
+    temp = temp_f(data['main']['temp'])
+    print("The temp in Kent is ", temp)
+    if temp < 30:
+        color = "blue"
+    elif temp < 60: 
+        color = "green"
+    elif temp < 90: 
+        color = "yellow"
+    else:
+        color = "red"
+    return render_template('map.html', temp=int(temp), color=color)
 
 @app.route("/")
 def get_list():
@@ -65,3 +89,7 @@ def post_update_item():
     _id = ObjectId(_id)
     shopping_list.update_one({'_id':_id}, {"$set" : {"desc": desc}})
     return redirect(url_for('get_list'))
+
+@app.route('/<path:path>')
+def static_file(path):
+    return app.send_static_file(path)
