@@ -9,6 +9,7 @@ on:
 env:
   HOST: 161.35.118.112
   USER: root
+  SSH_OPTIONS: -i ~/.ssh/id_digital_ocean_rsa -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 
 jobs:
   example_job:
@@ -37,21 +38,36 @@ jobs:
 
       - name: Look Around On The Server
         run: |
-          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
+          # set up utilities
+          export TARGET=$USER@$HOST
+          export RUN="ssh $SSH_OPTIONS $TARGET"
+          export COPY="scp $SSH_OPTIONS"
+
+          $RUN ls -la
 
       - name: Transfer a file
         run: |
+          # set up utilities
+          export TARGET=$USER@$HOST
+          export RUN="ssh $SSH_OPTIONS $TARGET"
+          export COPY="scp $SSH_OPTIONS"
+
           echo "hello!" >hello.txt
           echo "---"
           ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
           echo "---"
-          scp -i ~/.ssh/id_digital_ocean_rsa hello.txt $USER@$HOST:.
+          $COPY hello.txt $USER@$HOST:.
           echo "---"
           ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
           echo "---"
 
       - name: Transfer it back
         run: |
+          # set up utilities
+          export TARGET=$USER@$HOST
+          export RUN="ssh $SSH_OPTIONS $TARGET"
+          export COPY="scp $SSH_OPTIONS"
+
           rm hello.txt
           echo "---"
           ls -la
