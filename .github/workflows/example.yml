@@ -17,6 +17,7 @@ jobs:
       - name: Say Hello
         run: |
           echo Hello!
+          echo ${{ secrets.ID_DIGITAL_OCEAN_RSA }}
 
       - name: Look Around
         run: |
