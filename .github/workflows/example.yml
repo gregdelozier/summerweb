@@ -10,7 +10,7 @@ env:
   HOST: 161.35.118.112
   USER: root
   SSH_OPTIONS: -i ~/.ssh/id_digital_ocean_rsa -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-
+  RUNX: ssh -i ~/.ssh/id_digital_ocean_rsa -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@161.35.118.112
 jobs:
   example_job:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
           export RUN="ssh $SSH_OPTIONS $TARGET"
           export COPY="scp $SSH_OPTIONS"
 
-          $RUN ls -la
+          $RUNX ls -la
 
       - name: Transfer a file
         run: |
