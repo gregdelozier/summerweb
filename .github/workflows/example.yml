@@ -39,6 +39,17 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
 
+      - name: Transfer a file
+        run: |
+          echo "hello!" >hello.txt
+          echo "---"
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
+          echo "---"
+          scp -i ~/.ssh/id_digital_ocean_rsa hello.txt $USER@$HOST:.
+          echo "---"
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
+          echo "---"
+
       - name: Say Goodbye
         run: |
           echo Goodbye!
