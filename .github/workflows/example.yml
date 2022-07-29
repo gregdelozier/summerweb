@@ -52,7 +52,7 @@ jobs:
 
       - name: Transfer it back
         run: |
-          echo rm hello.txt
+          rm hello.txt
           echo "---"
           ls -la
           echo "---"
