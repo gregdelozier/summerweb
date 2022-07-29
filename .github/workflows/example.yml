@@ -50,6 +50,28 @@ jobs:
           ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
           echo "---"
 
+      - name: Transfer it back
+        run: |
+          echo rm hello.txt
+          echo "---"
+          ls -la
+          echo "---"
+          scp -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST:./hello.txt .
+          echo "---"
+          ls -la
+          echo "---"
+
+      - name: Clean up that remote file
+        run: |
+          echo "hello!" >hello.txt
+          echo "---"
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
+          echo "---"
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST rm ./hello.txt
+          echo "---"
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
+          echo "---"
+
       - name: Say Goodbye
         run: |
           echo Goodbye!
