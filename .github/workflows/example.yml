@@ -6,18 +6,27 @@ on:
     
   workflow_dispatch:
 
+env:
+  HOST: 161.35.118.112
+  USER: root
+
 jobs:
   example_job:
     runs-on: ubuntu-latest
     steps:
-    
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.ID_DIGITAL_OCEAN_RSA }}
+          name: id_digital_ocean_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
       - name: Checkout
         uses: actions/checkout@v3
       
       - name: Say Hello
         run: |
           echo Hello!
-          echo ${{ secrets.ID_DIGITAL_OCEAN_RSA }}
 
       - name: Look Around
         run: |
@@ -25,6 +34,10 @@ jobs:
           pwd
           echo '$ ls -la'
           ls -la
+
+      - name: Look Around On The Server
+        run: |
+          ssh -i ~/.ssh/id_digital_ocean_rsa $USER@$HOST ls -la
 
       - name: Say Goodbye
         run: |
